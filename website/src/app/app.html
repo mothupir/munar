@@ -5,9 +5,9 @@
             <p-button
                 [label]="item.label"
                 [icon]="item.icon"
-                text="{{ item.label == selected ? false : true }}"
+                text
                 size="small"
-                severity="secondary"
+                [severity]="item.label == selected ? 'primary' : 'secondary'"
                 (onClick)="selectionChanged(item.label)"/>
         </ng-template>
         <ng-template #end>
