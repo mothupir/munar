@@ -1,1 +1,23 @@
-<router-outlet />
+<div class="wrapper">
+  <div class="background">
+    <p-menubar [model]="items">
+        <ng-template #item let-item let-root="root">
+            <p-button
+                [label]="item.label"
+                [icon]="item.icon"
+                text="{{ item.label == selected ? false : true }}"
+                size="small"
+                severity="secondary"
+                (onClick)="selectionChanged(item.label)"/>
+        </ng-template>
+        <ng-template #end>
+            <div class="flex items-center gap-2">
+                <p-button label="Connect" text raised size="small" />
+                <p-button label="Disconnect" text raised iconPos="right" severity="danger" size="small" />
+            </div>
+        </ng-template>
+    </p-menubar>
+
+    <router-outlet />
+  </div>
+</div>

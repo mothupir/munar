@@ -1,0 +1,22 @@
+.wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #4c6277;
+}
+
+.background {
+    background: #f0f0f0;
+    border-top-right-radius: 60%;
+    width: 100%;
+    height: 100%;
+    padding: 50px;
+}
+
+@media screen and (max-width: 920px) {
+    .background {
+        padding: 10px;
+    }
+}
