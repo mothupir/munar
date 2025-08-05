@@ -1,6 +1,6 @@
 <div class="wrapper">
   <div class="background">
-    <p-menubar [model]="items">
+    <p-menubar [model]="items" class="mb-3">
         <ng-template #item let-item let-root="root">
             <p-button
                 [label]="item.label"
@@ -8,12 +8,13 @@
                 text
                 size="small"
                 [severity]="item.label == selected ? 'primary' : 'secondary'"
-                (onClick)="selectionChanged(item.label)"/>
+                (onClick)="selectionChanged(item.label)"
+                *ngIf="item.available" />
         </ng-template>
         <ng-template #end>
             <div class="flex items-center gap-2">
                 <p-button label="Connect" text raised size="small" />
-                <p-button label="Disconnect" text raised iconPos="right" severity="danger" size="small" />
+                <p-button label="Disconnect" text raised severity="danger" size="small" />
             </div>
         </ng-template>
     </p-menubar>
