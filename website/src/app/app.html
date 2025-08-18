@@ -13,7 +13,7 @@
         </ng-template>
         <ng-template #end>
             <div class="flex items-center gap-2">
-                <p-button label="Connect" text raised size="small" />
+                <p-button label="Connect" (onClick)="showDialog()" text raised size="small" />
                 <p-button label="Disconnect" text raised severity="danger" size="small" />
             </div>
         </ng-template>
@@ -22,3 +22,17 @@
     <router-outlet />
   </div>
 </div>
+
+<p-dialog modal="true" maskStyleClass="backdrop-blur-sm" [(visible)]="visible" styleClass="!border-0 !bg-transparent" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+    <ng-template #headless>
+      <div class="flex flex-column">
+        <div class="flex justify-center bg-gray-200 mb-2 p-2 border-round-top-lg">
+          <div class="text-lg font-bold"><span class="pi pi-wallet"></span> Connect Wallet</div>
+        </div>
+        <div class="flex flex-wrap gap-2 p-2">
+          <p-button label="Connect with Google" icon="pi pi-google" severity="secondary" text raised size="small" />
+          <p-button label="Connect with Apple" icon="pi pi-apple" severity="secondary" text raised size="small" />
+        </div>
+      </div>
+    </ng-template>
+</p-dialog>

@@ -4,11 +4,12 @@ import { Router, RouterOutlet } from '@angular/router';
 import { Button } from 'primeng/button';
 import { Menubar } from 'primeng/menubar';
 import { MenuItem } from 'primeng/api';
+import { Dialog } from 'primeng/dialog';
 import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, CommonModule, Button, Menubar],
+  imports: [RouterOutlet, CommonModule, Button, Menubar, Dialog],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
@@ -16,6 +17,7 @@ export class App {
     protected readonly title = signal('Munar');
     items: MenuItem[] | undefined;
     selected: string | undefined = 'Dashboard';
+    visible: boolean = false;
 
     constructor(private router: Router) {}
 
@@ -43,6 +45,12 @@ export class App {
             },
         ];
     }
+
+    showDialog() {
+        this.visible = true;
+    }
+
+    
 
     selectionChanged(option: string) {
         this.selected = option;
