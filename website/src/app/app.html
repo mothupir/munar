@@ -2,19 +2,24 @@
   <div class="background">
     <p-menubar [model]="items" class="mb-3">
         <ng-template #item let-item let-root="root">
+          @if (item.available){
             <p-button
                 [label]="item.label"
                 [icon]="item.icon"
                 text
                 size="small"
                 [severity]="item.label == selected ? 'primary' : 'secondary'"
-                (onClick)="selectionChanged(item.label)"
-                *ngIf="item.available" />
+                (onClick)="selectionChanged(item.label)" />
+          }
         </ng-template>
         <ng-template #end>
             <div class="flex items-center gap-2">
-                <p-button label="Connect" (onClick)="showDialog()" text raised size="small" />
-                <p-button label="Disconnect" text raised severity="danger" size="small" />
+              @if (signedIn()){
+                <p-button label="Disconnect" (onClick)="confirmSignOut($event)" icon="pi pi-sign-out" iconPos="right" text raised severity="danger" size="small" />
+              }
+              @else {
+                <p-button label="Connect Account" (onClick)="showDialog()" icon="pi pi-sign-in" iconPos="right" text raised size="small" />
+              }
             </div>
         </ng-template>
     </p-menubar>
@@ -23,16 +28,43 @@
   </div>
 </div>
 
-<p-dialog modal="true" maskStyleClass="backdrop-blur-sm" [(visible)]="visible" styleClass="!border-0 !bg-transparent" [breakpoints]="{ '1199px': '75vw', '575px': '90vw' }">
+<p-toast position="bottom-right" />
+
+<p-dialog modal="true" maskStyleClass="backdrop-blur-sm" [(visible)]="visible" styleClass="!border-0 !bg-transparent"  position="top">
     <ng-template #headless>
-      <div class="flex flex-column">
-        <div class="flex justify-center bg-gray-200 mb-2 p-2 border-round-top-lg">
-          <div class="text-lg font-bold"><span class="pi pi-wallet"></span> Connect Wallet</div>
+      <div class="flex flex-column pb-2">
+        <div class="flex justify-content-between bg-gray-200 mb-2 p-2 border-round-top-lg">
+          <div class="text-lg font-bold pt-2">Connect</div>
+          <p-button icon="pi pi-times" severity="secondary" text rounded size="small" (onClick)="visible = false" />
         </div>
         <div class="flex flex-wrap gap-2 p-2">
-          <p-button label="Connect with Google" icon="pi pi-google" severity="secondary" text raised size="small" />
-          <p-button label="Connect with Apple" icon="pi pi-apple" severity="secondary" text raised size="small" />
+          <p-button label="Connect with Google" (onClick)="signIn()" icon="pi pi-google" severity="secondary" text raised size="small" />
+          <p-button label="Connect with Apple" icon="pi pi-apple" disabled severity="secondary" text raised size="small" />
+        </div>
+        <div class="flex align-items-center justify-content-center p-2">
+          <p-checkbox [(ngModel)]="keepAlive" binary="true" size="small" />
+          <label for="cb1" class="ml-2 text-sm">Store account locally?</label>
         </div>
       </div>
     </ng-template>
 </p-dialog>
+
+<p-confirmpopup #cp>
+  <ng-template #headless let-message>
+    <div class="flex flex-column gap-2 p-2">
+      <div class="flex justify-content-between">
+        <div class="font-bold"> Sign Out</div>
+        <span class="{{message.icon}} text-red-500 text-lg"></span>
+      </div>
+      <div class="text-sm pb-2">{{ message.message }}</div>
+      <div class="grid px-2 gap-2">
+        <div class="col p-0">
+          <p-button label="Cancel" outlined severity="secondary" styleClass="w-full" size="small" (onClick)="cp.onReject()" />
+        </div>
+        <div class="col p-0">
+          <p-button label="Sign Out" outlined severity="danger" styleClass="w-full" size="small" (onClick)="cp.onAccept()" />
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-confirmpopup>

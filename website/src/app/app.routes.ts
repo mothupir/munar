@@ -18,6 +18,10 @@ export const routes: Routes = [
         loadComponent: () => import('./admin/admin').then(m => m.Admin)
     },
     {
+        path: 'signin',
+        loadComponent: () => import('./signin/signin').then(m => m.Signin)
+    },
+    {
         path: '',
         redirectTo: 'dashboard',
         pathMatch: 'full'
