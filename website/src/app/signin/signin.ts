@@ -34,21 +34,19 @@ export class Signin implements OnInit {
     }
 
     await this.retrieveKeylessAccount(jwt, ekp!).then((account) => {
-      if (account){
+      if (account) {
         localStorage.setItem("account", encodeAccount(account));
-        setTimeout(() => {
-          this.showSpinner.set(false);
-          this.router.navigate([localStorage.getItem('redirect') || '/']);
-        }, 2000);
+        console.log("Account stored in localStorage:", account.accountAddress.toString());
+        this.router.navigate([localStorage.getItem('redirect') || '/']);
       }
+    }).finally(() => {
+      this.showSpinner.set(false);
     });
   }
 
   private async retrieveKeylessAccount(jwt: string, ekp: EphemeralKeyPair): Promise<KeylessAccount | undefined> {
-    const aptos = new Aptos(new AptosConfig({ network: env.production ? Network.MAINNET : Network.TESTNET }));
+    const aptos = new Aptos(new AptosConfig({ network: env.production ? Network.TESTNET : Network.DEVNET }));
     const account = await aptos?.deriveKeylessAccount({ jwt: jwt!, ephemeralKeyPair: ekp! });
-
-    console.log("Retrieved Account", account.accountAddress.toString());
     return account;
   }
 

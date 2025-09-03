@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit, signal } from '@angular/core';
+import { AfterContentInit, AfterViewInit, Component, OnInit, signal } from '@angular/core';
 import { Router, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -23,7 +23,7 @@ import decodeAccount from './helpers/decode-account';
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit, AfterViewInit {
+export class App implements OnInit, AfterContentInit {
     protected readonly title = signal('Munar');
     items: MenuItem[] | undefined;
     selected: string | undefined = 'Dashboard';
@@ -37,7 +37,7 @@ export class App implements OnInit, AfterViewInit {
         private confirmationService: ConfirmationService) {
     }
 
-    ngAfterViewInit(): void {
+    ngAfterContentInit() {
         this.checkAccount();
     }
 
@@ -100,9 +100,10 @@ export class App implements OnInit, AfterViewInit {
     checkAccount() {
         var encodedAccount = localStorage.getItem("account");
         if (encodedAccount) {
+            console.log("Found existing account");
             const keylessAccount = decodeAccount(encodedAccount);
             this.signedIn.set(true);
-            this.messageService.add({severity:'success', summary: 'Account', detail: `You are signed in!\n Public Key: ${keylessAccount.accountAddress}`, life: 3000});
+            this.messageService.add({severity:'success', summary: 'Account', detail: `You are signed in!\n\n Public Key: ${keylessAccount.accountAddress}`, life: 3000});
         } else {
             this.messageService.add({severity:'warn', summary: 'Account', detail: 'You are not signed in!', life: 4000});
         }
