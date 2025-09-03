@@ -28,6 +28,8 @@ export class Signin implements OnInit {
     const jwt = this.tryParseJwt(window.location.href);
     const jwtNonce = jwtDecode<{ nonce: string }>(jwt).nonce;
 
+    console.log("JWT Nonce:", jwtDecode<object>(jwt));
+
     const ekp = this.getLocalEkp();
     if (!ekp || ekp.nonce !== jwtNonce || ekp.isExpired()) {
       this.messageService.add({severity:'error', summary: 'Error', detail: 'No ephemeral key pair found. Please try signing in again.'});

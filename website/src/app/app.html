@@ -15,10 +15,10 @@
         <ng-template #end>
             <div class="flex items-center gap-2">
               @if (signedIn()){
-                <p-button label="Disconnect" (onClick)="confirmSignOut($event)" icon="pi pi-sign-out" iconPos="right" text raised severity="danger" size="small" />
+                <p-button (onClick)="confirmSignOut($event)" icon="pi pi-sign-out" iconPos="right" text raised severity="danger" size="small" />
               }
               @else {
-                <p-button label="Connect Account" (onClick)="showDialog()" icon="pi pi-sign-in" iconPos="right" text raised size="small" />
+                <p-button label="Signin" (onClick)="showDialog()" icon="pi pi-sign-in" iconPos="right" text raised size="small" />
               }
             </div>
         </ng-template>
