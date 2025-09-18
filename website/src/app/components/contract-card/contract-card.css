@@ -1,3 +1,8 @@
 .card {
     box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.1) inset;
+    background-color: #ddd1;
+}
+
+.card:hover {
+    background-color: #bbb1;
 }

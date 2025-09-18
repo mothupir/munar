@@ -14,7 +14,7 @@ export const appConfig: ApplicationConfig = {
         preset: Theme,
         options: {
           prefix: 'p',
-          darkModeSelector: 'system',
+          darkModeSelector: 'light',
           cssLayer: false
         }
       }

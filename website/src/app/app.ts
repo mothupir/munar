@@ -26,10 +26,11 @@ import decodeAccount from './helpers/decode-account';
 export class App implements OnInit, AfterContentInit {
     protected readonly title = signal('Munar');
     items: MenuItem[] | undefined;
-    selected: string | undefined = 'Dashboard';
+    selected: string | undefined = 'Browse';
     visible: boolean = false;
     keepAlive: boolean = false;
-    signedIn = signal(false);
+    signedIn = false;
+    isAdmin = false;
 
     constructor(
         private router: Router,
@@ -42,26 +43,27 @@ export class App implements OnInit, AfterContentInit {
     }
 
     ngOnInit() {
+        this.checkAccount();
          this.items = [
             {
-                label: 'Dashboard',
-                icon: 'pi pi-desktop',
+                label: 'Browse',
+                icon: 'pi pi-list',
                 available: true
             },
             {
                 label: 'Contracts',
                 icon: 'pi pi-briefcase',
-                available: true
+                available: this.signedIn
             },
             {
                 label: 'Investments',
                 icon: 'pi pi-money-bill',
-                available: true
+                available: this.signedIn
             },
             {
                 label: 'Admin',
                 icon: 'pi pi-check-square',
-                available: false
+                available: this.isAdmin,
             },
         ];
     }
@@ -82,9 +84,12 @@ export class App implements OnInit, AfterContentInit {
 
     signOut() {
         localStorage.removeItem("account");
-        this.signedIn.set(false);
-        this.messageService.add({severity:'warn', summary: 'Signed Out', detail: 'You have been signed out.'});
-        this.router.navigate(['/']);
+        this.signedIn = false;
+        this.messageService.add({severity:'warn', summary: 'Signed Out', detail: 'You have been signed out.', life: 3000});
+
+        setTimeout(() => {
+            this.router.navigate(['/']).then(() => window.location.reload())
+        }, 1500);
     }
 
     signIn() {
@@ -102,10 +107,10 @@ export class App implements OnInit, AfterContentInit {
         if (encodedAccount) {
             console.log("Found existing account");
             const keylessAccount = decodeAccount(encodedAccount);
-            this.signedIn.set(true);
+            this.signedIn = true;
             this.messageService.add({severity:'success', summary: 'Account', detail: `You are signed in!\n\n Public Key: ${keylessAccount.accountAddress}`, life: 3000});
         } else {
-            this.messageService.add({severity:'warn', summary: 'Account', detail: 'You are not signed in!', life: 4000});
+            this.messageService.add({severity:'warn', summary: 'Account', detail: 'You are not signed in!', life: 3000});
         }
     }
 

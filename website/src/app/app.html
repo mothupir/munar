@@ -14,7 +14,7 @@
         </ng-template>
         <ng-template #end>
             <div class="flex items-center gap-2">
-              @if (signedIn()){
+              @if (signedIn){
                 <p-button (onClick)="confirmSignOut($event)" icon="pi pi-sign-out" iconPos="right" text raised severity="danger" size="small" />
               }
               @else {

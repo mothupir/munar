@@ -28,19 +28,24 @@ export class Signin implements OnInit {
     const jwt = this.tryParseJwt(window.location.href);
     const jwtNonce = jwtDecode<{ nonce: string }>(jwt).nonce;
 
-    console.log("JWT Nonce:", jwtDecode<object>(jwt));
-
     const ekp = this.getLocalEkp();
     if (!ekp || ekp.nonce !== jwtNonce || ekp.isExpired()) {
       this.messageService.add({severity:'error', summary: 'Error', detail: 'No ephemeral key pair found. Please try signing in again.'});
     }
 
     await this.retrieveKeylessAccount(jwt, ekp!).then((account) => {
+      console.error("Error retrieving keyless account 1");
       if (account) {
         localStorage.setItem("account", encodeAccount(account));
-        console.log("Account stored in localStorage:", account.accountAddress.toString());
-        this.router.navigate([localStorage.getItem('redirect') || '/']);
+        this.router.navigate([localStorage.getItem('redirect') || '/']).then(() => {
+          localStorage.removeItem('redirect');
+          console.log("Reloading to update state");
+          window.location.reload();
+        });
       }
+    }).catch((e) => {
+      console.error("Error retrieving keyless account");
+      this.messageService.add({severity:'error', summary: 'Aptos Error', detail: e.message || 'An unknown error occurred while retrieving your account.'});
     }).finally(() => {
       this.showSpinner.set(false);
     });

@@ -4,18 +4,19 @@ import { FormsModule } from '@angular/forms';
 
 import { SelectButton } from 'primeng/selectbutton';
 import { Select } from 'primeng/select';
-import { Card } from 'primeng/card';
-import { ContractCard } from "../components/contract-card/contract-card";
+import { InputGroup } from 'primeng/inputgroup';
+import { InputGroupAddon } from 'primeng/inputgroupaddon';
+import { InputText } from 'primeng/inputtext';
 
 @Component({
-  selector: 'app-dashboard',
-  imports: [CommonModule, FormsModule, SelectButton, Select, Card, ContractCard],
-  templateUrl: './dashboard.html',
-  styleUrl: './dashboard.css'
+  selector: 'app-browse',
+  imports: [CommonModule, FormsModule, SelectButton, Select, InputGroup, InputGroupAddon, InputText],
+  templateUrl: './browse.html',
+  styleUrl: './browse.css'
 })
-export class Dashboard {
+export class Browse {
   category: string | undefined = 'Recent';
-  categories: string[] = ['Recent', 'Browse', 'Approved', 'Partially Funded'];
+  categories: string[] = ['Recent', 'Browse', 'Approved'];
 
   period: string | undefined;
   periods: string[] = ['1 Month', '3 Months', '6 Months', '12 Months'];
