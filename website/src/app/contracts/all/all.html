@@ -12,8 +12,8 @@
 
 <div class="flex flex-wrap">
 @for (contract of contracts; track $index) {
-    <div class="p-1 w-6 lg:w-4">
-    <app-contract-card (onView)="viewContract()" (onInvest)="investInContract()" class="w-full" />
+    <div class="p-1 w-12 md:w-6 lg:w-4">
+        <app-contract-card (onView)="viewContract()" (onInvest)="investInContract()" class="w-full" />
     </div>
 }
 </div>
