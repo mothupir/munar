@@ -27,7 +27,7 @@ export class All {
     this.router.navigate(['/contracts/view'])
   }
 
-  investInContract() {
+  updateContract() {
     this.router.navigate(['/contracts/update'])
   }
 

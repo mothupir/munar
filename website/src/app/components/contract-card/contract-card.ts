@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { Button } from "primeng/button";
 
 @Component({
@@ -9,8 +9,12 @@ import { Button } from "primeng/button";
 })
 export class ContractCard {
 
+  @Input() canInvest!: boolean;
+  @Input() canUpdate!: boolean;
+
   @Output() onView = new EventEmitter();
   @Output() onInvest = new EventEmitter();
+  @Output() onUpdate = new EventEmitter();
 
   view() {
     this.onView.emit();
@@ -18,6 +22,10 @@ export class ContractCard {
 
   invest() {
     this.onInvest.emit();
+  }
+
+  update() {
+    this.onUpdate.emit();
   }
 
 }
