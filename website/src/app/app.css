@@ -10,9 +10,21 @@
 .background {
     background: #fff;
     border-top-right-radius: 60%;
+    border-bottom-left-radius: 20%;
     width: 100%;
     height: 100vh;
-    padding: 50px;
+    padding: 50px 10%;
+
+}
+
+.footer {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    text-align: right;
+    color: #6666;
+    font-size: 0.7em;
+    font-style: italic;
 }
 
 .p-button {
